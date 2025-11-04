@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 654cbff0c97f6194e82bef0c9bd89deb
+guid: 432c7b980b27c0b4fac2376401fa7a47
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 971078276795348481
-    second: "avi\xE3o_0"
-  - first:
-      213: 8437423091087250532
-    second: "avi\xE3o_1"
-  - first:
-      213: -5572013177405953180
-    second: "avi\xE3o_2"
-  - first:
-      213: -1688208808107771784
-    second: "avi\xE3o_3"
-  - first:
-      213: -3499310524556725917
-    second: "avi\xE3o_4"
+      213: 8042765465244585006
+    second: cenario-jogo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -138,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "avi\xE3o_0"
+      name: cenario-jogo_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 990
-        width: 126
-        height: 80
+        x: 0
+        y: 0
+        width: 740
+        height: 493
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,96 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1063c793c86f97d00800000000000000
-      internalID: 971078276795348481
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "avi\xE3o_1"
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 990
-        width: 126
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4641fe3199fb71570800000000000000
-      internalID: 8437423091087250532
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "avi\xE3o_2"
-      rect:
-        serializedVersion: 2
-        x: 261
-        y: 991
-        width: 126
-        height: 73
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 46b2ce4798b3ca2b0800000000000000
-      internalID: -5572013177405953180
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "avi\xE3o_3"
-      rect:
-        serializedVersion: 2
-        x: 390
-        y: 992
-        width: 126
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 878fc0698074298e0800000000000000
-      internalID: -1688208808107771784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "avi\xE3o_4"
-      rect:
-        serializedVersion: 2
-        x: 518
-        y: 993
-        width: 126
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 361b2093e93ff6fc0800000000000000
-      internalID: -3499310524556725917
+      spriteID: e2ccea70494ad9f60800000000000000
+      internalID: 8042765465244585006
       vertices: []
       indices: 
       edges: []
@@ -260,12 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      "avi\xE3o_0": 971078276795348481
-      "avi\xE3o_1": 8437423091087250532
-      "avi\xE3o_2": -5572013177405953180
-      "avi\xE3o_3": -1688208808107771784
-      "avi\xE3o_4": -3499310524556725917
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
