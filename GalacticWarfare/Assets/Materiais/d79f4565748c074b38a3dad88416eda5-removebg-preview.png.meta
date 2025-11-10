@@ -219,6 +219,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -1159,7 +1185,49 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_0: 4999098776815515084
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_1: -6492801941317611683
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_10: 259735082494737985
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_11: -4132219871240362297
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_12: 3555929410945125951
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_13: 1284643269302096602
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_14: -5103720319319920193
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_15: -6624298412642556684
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_16: -1450892685351679484
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_17: -119744693997853330
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_18: 5399972155711585704
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_19: -9172804123975587662
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_2: 1199664755218169056
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_20: -1906530826175274922
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_21: -8603582273156594563
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_22: -7529498132504912547
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_23: -4609215510077335477
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_24: 911538408957308575
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_25: 5395205849426033521
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_26: 1835558370317390369
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_27: -242719516546385711
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_28: 4273797135515462840
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_29: 8032670948994640273
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_3: -6958365417460968483
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_30: -8309652202736069005
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_31: -7046433777218134782
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_32: -443370778438124350
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_33: -4782645183884861509
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_34: -819195223876434906
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_35: -5850743235285703330
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_36: -4203621258433233119
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_37: 7768263914708593981
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_38: 3859364531975644188
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_39: -3017174634690597529
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_4: 5184205837023238478
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_40: -2673053003803278775
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_41: 6788813340303375064
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_5: 693140704388180829
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_6: 3642055255796180214
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_7: -3033708993843263279
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_8: -7790339114541075801
+      d79f4565748c074b38a3dad88416eda5-removebg-preview_9: 2911116858049736784
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

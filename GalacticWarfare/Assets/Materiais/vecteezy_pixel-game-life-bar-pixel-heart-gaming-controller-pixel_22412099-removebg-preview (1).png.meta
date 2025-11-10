@@ -113,6 +113,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -244,7 +270,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      vecteezy_pixel-game-life-bar-pixel-heart-gaming-controller-pixel_22412099-removebg-preview (1)_0: -5322563697531244263
+      vecteezy_pixel-game-life-bar-pixel-heart-gaming-controller-pixel_22412099-removebg-preview (1)_1: -6285242161268940076
+      vecteezy_pixel-game-life-bar-pixel-heart-gaming-controller-pixel_22412099-removebg-preview (1)_2: 5159662005733424485
+      vecteezy_pixel-game-life-bar-pixel-heart-gaming-controller-pixel_22412099-removebg-preview (1)_3: -44034123121579034
+      vecteezy_pixel-game-life-bar-pixel-heart-gaming-controller-pixel_22412099-removebg-preview (1)_4: 9136573414022642065
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
