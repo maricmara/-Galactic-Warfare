@@ -342,11 +342,13 @@ Transform:
   m_GameObject: {fileID: 500821240}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-<<<<<<< HEAD
   m_LocalPosition: {x: -7.31, y: -0.64, z: 0}
+<<<<<<< HEAD
 =======
   m_LocalPosition: {x: -8.06, y: -0.6613, z: 0}
 >>>>>>> parent of bfbf66d (inim,i)
+=======
+>>>>>>> parent of 9a71a65 (.)
   m_LocalScale: {x: 3.8074157, y: 3.8074157, z: 13.846428}
   m_ConstrainProportionsScale: 1
   m_Children: []
