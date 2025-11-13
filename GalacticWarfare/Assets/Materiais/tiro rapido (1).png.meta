@@ -235,7 +235,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      tiro rapido (1)_0: -6703378966934581128
+      tiro rapido (1)_1: -127488693016587638
+      tiro rapido (1)_2: -7941818562369267552
+      tiro rapido (1)_3: -7896611553888572374
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

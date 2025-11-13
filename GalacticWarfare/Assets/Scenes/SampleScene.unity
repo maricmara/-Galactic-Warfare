@@ -502,7 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   tilt: 5
-  xLimit: 8
+  xLimit: 100
   yLimit: 4.5
   bulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
