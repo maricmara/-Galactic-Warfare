@@ -30,7 +30,8 @@ public class BattleCruiser : MonoBehaviour
 
     void Movimento()
     {
-        transform.Translate(Vector2.down * speed * Time.deltaTime);
+        // movimento horizontal, da direita para a esquerda
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
     }
 
     void AtirarPrincipal()

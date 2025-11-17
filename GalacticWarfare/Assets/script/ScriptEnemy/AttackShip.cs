@@ -25,7 +25,8 @@ public class AttackShip : MonoBehaviour
 
     void Movimento()
     {
-        transform.Translate(Vector2.down * speed * Time.deltaTime);
+        // anda da direita para a esquerda
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
     }
 
     void Atirar()
@@ -41,7 +42,7 @@ public class AttackShip : MonoBehaviour
 
     void DispararRajada()
     {
-        float anguloInicial = -spreadAngle / 2f;   
+        float anguloInicial = -spreadAngle / 2f;
         float incremento = spreadAngle / (tirosPorRajada - 1);
 
         for (int i = 0; i < tirosPorRajada; i++)

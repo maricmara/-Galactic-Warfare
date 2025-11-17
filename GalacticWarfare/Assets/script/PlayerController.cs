@@ -12,26 +12,26 @@ public class PlayerSpaceshipController : MonoBehaviour
 
     [Header("Tiros")]
     public Transform firePoint;
-    public GameObject bullet1;   // tiro normal
-    public GameObject bullet2;   // tiro duplo
-    public GameObject bullet3;   // tiro laser
+    public GameObject bullet1;
+    public GameObject bullet2;
+    public GameObject bullet3;
 
     public float fireRate = 0.2f;
     private float nextFire = 0f;
 
-    private int currentShot = 1;   // tipo de tiro inicial
+    private int currentShot = 1;
 
-    private Rigidbody rb;
+    private Rigidbody2D rb;   // ← CORRETO
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.useGravity = false;   // nave não cai
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;   // não cair
     }
 
     void Update()
     {
-        // Trocar o tipo de tiro (1 / 2 / 3)
+        // Trocar tiros
         if (Input.GetKeyDown(KeyCode.Alpha1)) currentShot = 1;
         if (Input.GetKeyDown(KeyCode.Alpha2)) currentShot = 2;
         if (Input.GetKeyDown(KeyCode.Alpha3)) currentShot = 3;
@@ -41,38 +41,29 @@ public class PlayerSpaceshipController : MonoBehaviour
         {
             nextFire = Time.time + fireRate;
 
-            switch (currentShot)
-            {
-                case 1:
-                    Instantiate(bullet1, firePoint.position, firePoint.rotation);
-                    break;
+            GameObject prefab = currentShot == 1 ? bullet1 :
+                                currentShot == 2 ? bullet2 :
+                                bullet3;
 
-                case 2:
-                    Instantiate(bullet2, firePoint.position, firePoint.rotation);
-                    break;
-
-                case 3:
-                    Instantiate(bullet3, firePoint.position, firePoint.rotation);
-                    break;
-            }
+            Instantiate(prefab, firePoint.position, firePoint.rotation);
         }
     }
 
     void FixedUpdate()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveY = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
 
-        rb.linearVelocity = new Vector3(moveX, moveY, 0f) * speed;
+        // ✔ Movimento correto no Rigidbody2D
+        rb.linearVelocity = new Vector2(moveX, moveY) * speed;
 
-        // Limitar posição
-        rb.position = new Vector3(
+        // ✔ Limitar posição
+        rb.position = new Vector2(
             Mathf.Clamp(rb.position.x, -xLimit, xLimit),
-            Mathf.Clamp(rb.position.y, -yLimit, yLimit),
-            rb.position.z
+            Mathf.Clamp(rb.position.y, -yLimit, yLimit)
         );
 
-        // Inclinando nave ao mover
-        rb.rotation = Quaternion.Euler(-moveY * tilt, moveX * 10f, 0f);
+        // ✔ Inclinação da nave
+        transform.rotation = Quaternion.Euler(-moveY * tilt, 0f, -moveX * 10f);
     }
 }

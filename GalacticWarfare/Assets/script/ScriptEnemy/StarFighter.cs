@@ -10,11 +10,11 @@ public class StarFighter : MonoBehaviour
     public float zigzagAmplitude = 1f;
     public float zigzagFrequency = 5f;
 
-    private float startX;
+    private float startY;
 
     void Start()
     {
-        startX = transform.position.x;
+        startY = transform.position.y;
     }
 
     void Update()
@@ -24,9 +24,14 @@ public class StarFighter : MonoBehaviour
 
     void MovimentoErratico()
     {
-        // Desce enquanto faz zig-zag
-        float x = startX + Mathf.Sin(Time.time * zigzagFrequency) * zigzagAmplitude;
-        transform.position = new Vector3(x, transform.position.y - speed * Time.deltaTime, transform.position.z);
+        // Movimento para a esquerda com zig-zag vertical
+        float y = startY + Mathf.Sin(Time.time * zigzagFrequency) * zigzagAmplitude;
+
+        transform.position = new Vector3(
+            transform.position.x - speed * Time.deltaTime,
+            y,
+            transform.position.z
+        );
     }
 
     public void TomarDano(int dano)
