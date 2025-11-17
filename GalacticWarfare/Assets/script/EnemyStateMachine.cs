@@ -33,4 +33,3 @@ public class EnemyStateMachine : MonoBehaviour
             animator.SetBool("isChasing", false);
     }
 }
-
