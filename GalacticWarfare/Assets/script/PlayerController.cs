@@ -1,53 +1,78 @@
 using UnityEngine;
 
-public class PlayerController2D : MonoBehaviour
+public class PlayerSpaceshipController : MonoBehaviour
 {
     [Header("Movimentação")]
-    public float speed = 5f;             // Velocidade de movimento
-    public float tilt = 5f;              // Inclinação nas curvas
-    public float xLimit = 8f;            // Limite horizontal
-    public float yLimit = 4.5f;          // Limite vertical
+    public float speed = 10f;
+    public float tilt = 30f;
 
-    [Header("Tiro")]
-    public GameObject bulletPrefab;      // Prefab do projétil
-    public Transform firePoint;          // Ponto de saída do tiro
-    public float fireRate = 0.25f;       // Intervalo entre tiros
+    [Header("Limites")]
+    public float xLimit = 8f;
+    public float yLimit = 4f;
+
+    [Header("Tiros")]
+    public Transform firePoint;
+    public GameObject bullet1;   // tiro normal
+    public GameObject bullet2;   // tiro duplo
+    public GameObject bullet3;   // tiro laser
+
+    public float fireRate = 0.2f;
     private float nextFire = 0f;
 
-    private Rigidbody2D rb;
+    private int currentShot = 1;   // tipo de tiro inicial
+
+    private Rigidbody rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0f; // impede o avião de cair
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;   // nave não cai
     }
 
     void Update()
     {
-        // Disparo
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFire)
+        // Trocar o tipo de tiro (1 / 2 / 3)
+        if (Input.GetKeyDown(KeyCode.Alpha1)) currentShot = 1;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) currentShot = 2;
+        if (Input.GetKeyDown(KeyCode.Alpha3)) currentShot = 3;
+
+        // Atirar
+        if (Input.GetKey(KeyCode.Space) && Time.time >= nextFire)
         {
             nextFire = Time.time + fireRate;
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+            switch (currentShot)
+            {
+                case 1:
+                    Instantiate(bullet1, firePoint.position, firePoint.rotation);
+                    break;
+
+                case 2:
+                    Instantiate(bullet2, firePoint.position, firePoint.rotation);
+                    break;
+
+                case 3:
+                    Instantiate(bullet3, firePoint.position, firePoint.rotation);
+                    break;
+            }
         }
     }
 
     void FixedUpdate()
     {
-        // Entrada de movimento
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxis("Vertical");
 
-        // Movimento
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical) * speed;
-        rb.linearVelocity = movement;
+        rb.linearVelocity = new Vector3(moveX, moveY, 0f) * speed;
 
-        // Limitar posição na tela
-        float xPos = Mathf.Clamp(rb.position.x, -xLimit, xLimit);
-        float yPos = Mathf.Clamp(rb.position.y, -yLimit, yLimit);
-        rb.position = new Vector2(xPos, yPos);
+        // Limitar posição
+        rb.position = new Vector3(
+            Mathf.Clamp(rb.position.x, -xLimit, xLimit),
+            Mathf.Clamp(rb.position.y, -yLimit, yLimit),
+            rb.position.z
+        );
 
-        // Inclinação (efeito de rotação quando vira)
-        rb.rotation = -moveHorizontal * tilt;
+        // Inclinando nave ao mover
+        rb.rotation = Quaternion.Euler(-moveY * tilt, moveX * 10f, 0f);
     }
 }
