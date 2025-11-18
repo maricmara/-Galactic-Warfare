@@ -624,8 +624,8 @@ MonoBehaviour:
   yLimit: 4.5
   firePoint: {fileID: 479328811}
   bullet1: {fileID: 4429474974500724032, guid: d0e8ba17da42a7c45af62a5fbbb1aa41, type: 3}
-  bullet2: {fileID: 0}
-  bullet3: {fileID: 0}
+  bullet2: {fileID: 399596298951399869, guid: bf20907907432e741976a9045239bcc4, type: 3}
+  bullet3: {fileID: 4926212165731726751, guid: 81fb26e912c7c5a4fad893d2d0ca27b8, type: 3}
   fireRate: 0.25
 --- !u!1 &519420028
 GameObject:
