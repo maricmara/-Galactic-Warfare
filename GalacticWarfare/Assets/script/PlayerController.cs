@@ -12,16 +12,20 @@ public class PlayerSpaceshipController : MonoBehaviour
 
     [Header("Tiros")]
     public Transform firePoint;
-    public GameObject bullet1;
-    public GameObject bullet2;
-    public GameObject bullet3;
-
+    public GameObject bullet1; // tiro rápido
+    public GameObject bullet2; // foguete
+    public GameObject bullet3; // laser
     public float fireRate = 0.2f;
     private float nextFire = 0f;
-
     private int currentShot = 1;
 
     private Rigidbody2D rb;
+
+    [Header("Recursos do jogador")]
+    public int ammoRocket = 50;       // Foguetes
+    public float laserEnergy = 100f;  // Energia do laser 0-100%
+    public bool superShotActive = false;
+    public float shield = 0f;         // Escudo
 
     void Start()
     {
@@ -31,38 +35,50 @@ public class PlayerSpaceshipController : MonoBehaviour
 
     void Update()
     {
-        // Trocar tiros diretamente
+        // Troca direta de tiro
         if (Input.GetKeyDown(KeyCode.Alpha1)) currentShot = 1;
         if (Input.GetKeyDown(KeyCode.Alpha2)) currentShot = 2;
         if (Input.GetKeyDown(KeyCode.Alpha3)) currentShot = 3;
 
-        // --- NOVO CÓDIGO: Troca de tiro em ciclo com a tecla Z ---
+        // Ciclo de tiro com Z
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            currentShot++; // Incrementa para o próximo tiro
-            
-            // Se passar de 3, volta para 1
-            if (currentShot > 3)
-            {
-                currentShot = 1;
-            }
-            
-            // Opcional: Debug para ver qual tiro está ativo
+            currentShot++;
+            if (currentShot > 3) currentShot = 1;
             Debug.Log("Tiro atual: " + currentShot);
         }
-        // --- FIM DO NOVO CÓDIGO ---
 
         // Atirar
         if (Input.GetKey(KeyCode.Space) && Time.time >= nextFire)
         {
             nextFire = Time.time + fireRate;
 
-            // Seleciona o prefab com base no tiro atual
-            GameObject prefab = currentShot == 1 ? bullet1 :
-                                currentShot == 2 ? bullet2 :
-                                bullet3;
+            GameObject prefab = null;
 
-            Instantiate(prefab, firePoint.position, firePoint.rotation);
+            switch(currentShot)
+            {
+                case 1:
+                    prefab = bullet1; // tiro rápido
+                    break;
+                case 2:
+                    if(ammoRocket > 0) 
+                    {
+                        prefab = bullet2; // foguete
+                        ammoRocket--;
+                    }
+                    break;
+                case 3:
+                    if(laserEnergy > 0f) 
+                    {
+                        prefab = bullet3; // laser
+                        laserEnergy -= 5f; // consome energia por tiro
+                        if(laserEnergy < 0f) laserEnergy = 0f;
+                    }
+                    break;
+            }
+
+            if(prefab != null)
+                Instantiate(prefab, firePoint.position, firePoint.rotation);
         }
     }
 
@@ -73,13 +89,11 @@ public class PlayerSpaceshipController : MonoBehaviour
 
         rb.linearVelocity = new Vector2(moveX, moveY) * speed;
 
-        // Limitar posição
         rb.position = new Vector2(
             Mathf.Clamp(rb.position.x, -xLimit, xLimit),
             Mathf.Clamp(rb.position.y, -yLimit, yLimit)
         );
 
-        // Inclinação da nave
         transform.rotation = Quaternion.Euler(-moveY * tilt, 0f, -moveX * 10f);
     }
 }

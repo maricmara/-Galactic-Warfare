@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
 
     [Header("Barra de Vida")]
-    public Image healthFill; // Arraste o HealthBarFill aqui!
+    public Image healthFill; // arraste o HealthBarFill aqui no Inspector
 
     void Start()
     {
@@ -28,16 +28,24 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("Jogador morreu!");
-            // Aqui depois colocamos animação, reinício, etc.
+            // Aqui depois você pode colocar animação, reinício, etc.
         }
     }
 
-    void UpdateHealthUI()
+    public void UpdateHealthUI()
     {
         if (healthFill != null)
         {
             healthFill.fillAmount = currentHealth / maxHealth;
         }
     }
-    
+
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        UpdateHealthUI();
+    }
 }

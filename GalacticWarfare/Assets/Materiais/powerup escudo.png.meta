@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 777756a62417d134980bd5e2ef122c10
+guid: ccd8cee37f4787145820f2da56ea4503
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6784605751818397792
-    second: power up fogo_0
+      213: -5515851078783427038
+    second: New Piskel (10)_0
   - first:
-      213: 8287357035855533261
-    second: power up fogo_1
+      213: -3708664010354139772
+    second: New Piskel (10)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,64 +99,16 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: power up fogo_0
+      name: New Piskel (10)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 41
-        width: 25
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 06825322cf2c72e50800000000000000
-      internalID: 6784605751818397792
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: power up fogo_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 4
-        width: 30
+        x: 31
+        y: 183
+        width: 26
         height: 26
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -166,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dc4d009d05b920370800000000000000
-      internalID: 8287357035855533261
+      spriteID: 22e98270ba2c373b0800000000000000
+      internalID: -5515851078783427038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: New Piskel (10)_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 55
+        width: 42
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48dd09f5bbd288cc0800000000000000
+      internalID: -3708664010354139772
       vertices: []
       indices: 
       edges: []
@@ -186,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      power up fogo_0: 6784605751818397792
-      power up fogo_1: 8287357035855533261
+      New Piskel (10)_0: -5515851078783427038
+      New Piskel (10)_1: -3708664010354139772
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
