@@ -17,7 +17,9 @@ public class PlayerSpaceshipController : MonoBehaviour
     public GameObject bullet3; // laser
     public float fireRate = 0.2f;
     private float nextFire = 0f;
-    private int currentShot = 1;
+
+    private int currentShot = 1;   // ← tiro atual
+    public int CurrentShot => currentShot;   // ← propriedade para UI
 
     private Rigidbody2D rb;
 
@@ -55,29 +57,31 @@ public class PlayerSpaceshipController : MonoBehaviour
 
             GameObject prefab = null;
 
-            switch(currentShot)
+            switch (currentShot)
             {
                 case 1:
                     prefab = bullet1; // tiro rápido
                     break;
+
                 case 2:
-                    if(ammoRocket > 0) 
+                    if (ammoRocket > 0)
                     {
                         prefab = bullet2; // foguete
                         ammoRocket--;
                     }
                     break;
+
                 case 3:
-                    if(laserEnergy > 0f) 
+                    if (laserEnergy > 0f)
                     {
                         prefab = bullet3; // laser
                         laserEnergy -= 5f; // consome energia por tiro
-                        if(laserEnergy < 0f) laserEnergy = 0f;
+                        if (laserEnergy < 0f) laserEnergy = 0f;
                     }
                     break;
             }
 
-            if(prefab != null)
+            if (prefab != null)
                 Instantiate(prefab, firePoint.position, firePoint.rotation);
         }
     }
