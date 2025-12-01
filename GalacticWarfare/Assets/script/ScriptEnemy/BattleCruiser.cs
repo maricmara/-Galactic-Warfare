@@ -2,27 +2,57 @@ using UnityEngine;
 
 public class BattleCruiser : MonoBehaviour
 {
-    [Header("Status")]
-    public int vida = 15;
-    public int escudo = 6;
-    public float speed = 1f;
+    [Header("Data (ScriptableObject)")]
+    public EnemyBattleCruiserData data;
 
-    [Header("Arma Principal")]
+    // Status internos
+    private int vida;
+    private int escudo;
+    private float speed;
+
+    // Tiro principal
     public GameObject bulletPrincipalPrefab;
     public Transform firePointPrincipal;
-    public float fireRatePrincipal = 2.5f;
-    public int tirosPorRajada = 5;
-    public float spreadAngle = 120f;
+    private float fireRatePrincipal;
+    private int tirosPorRajada;
+    private float spreadAngle;
     private float timerPrincipal;
 
-    [Header("Canhões Secundários")]
+    // Tiro secundário
     public GameObject bulletSecundariaPrefab;
     public Transform[] canhoesSecundarios;
-    public float fireRateSecundario = 1f;
+    private float fireRateSecundario;
     private float timerSecundario;
+
+    [Header("Explosão")]
+    public GameObject explosionPrefab;
+
+    private Animator anim;
+    private bool isDead = false;
+
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+
+        // Carrega os valores do ScriptableObject
+        vida = data.vida;
+        escudo = data.escudo;
+        speed = data.speed;
+
+        fireRatePrincipal = data.fireRatePrincipal;
+        tirosPorRajada = data.tirosPorRajada;
+        spreadAngle = data.spreadAngle;
+
+        fireRateSecundario = data.fireRateSecundaria;
+
+        timerPrincipal = fireRatePrincipal;
+        timerSecundario = fireRateSecundario;
+    }
 
     void Update()
     {
+        if (isDead) return;
+
         Movimento();
         AtirarPrincipal();
         AtirarSecundario();
@@ -30,7 +60,6 @@ public class BattleCruiser : MonoBehaviour
 
     void Movimento()
     {
-        // movimento horizontal, da direita para a esquerda
         transform.Translate(Vector2.left * (speed * Time.deltaTime));
     }
 
@@ -73,12 +102,32 @@ public class BattleCruiser : MonoBehaviour
 
     public void TomarDano(int dano)
     {
+        if (isDead) return;
+
+        // escudo primeiro
         if (escudo > 0)
             escudo -= dano;
         else
             vida -= dano;
 
         if (vida <= 0)
-            Destroy(gameObject);
+        {
+            isDead = true;
+            anim.SetBool("isFalling", true);
+
+            // Atualiza pontuação
+            GameManager.Instance.AddScore(data.pontosAoMorrer);
+
+            this.enabled = false;
+            Invoke(nameof(Explodir), 1.5f);
+        }
+    }
+
+    void Explodir()
+    {
+        if (explosionPrefab != null)
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 }

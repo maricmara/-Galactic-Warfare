@@ -9,6 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b0d6dfac35bce449085e647e20f698, type: 3}
-  m_Name: New Float Event Channel
+  m_Script: {fileID: 11500000, guid: bfbbcb26a14b13c40bfbc6830ea0a9c3, type: 3}
+  m_Name: StarFighter_Data
   m_EditorClassIdentifier: 
+  speed: 5
+  vida: 1
+  zigzagAmplitude: 1
+  zigzagFrequency: 5
+  pontosAoMorrer: 10
