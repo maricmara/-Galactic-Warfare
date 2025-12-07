@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
 
     [Header("Barra de Vida")]
-    public Image healthFill; // arraste o HealthBarFill aqui no Inspector
+    public Image healthFill;
 
     void Start()
     {
@@ -19,25 +20,24 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-
-        if (currentHealth < 0)
-            currentHealth = 0;
+        if (currentHealth < 0) currentHealth = 0;
 
         UpdateHealthUI();
 
         if (currentHealth <= 0)
         {
-            Debug.Log("Jogador morreu!");
-            // Aqui depois você pode colocar animação, reinício, etc.
+            PlayerDied();
         }
     }
 
-    public void UpdateHealthUI()
+    void PlayerDied()
     {
-        if (healthFill != null)
-        {
-            healthFill.fillAmount = currentHealth / maxHealth;
-        }
+        // só avisa o GameManager que uma vida foi perdida
+        GameManager.Instance.LoseLife(1);
+
+        // reseta HP para próxima vida (apenas se ainda tiver vidas)
+        currentHealth = maxHealth;
+        UpdateHealthUI();
     }
 
     public void Heal(float amount)
@@ -47,5 +47,11 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
 
         UpdateHealthUI();
+    }
+
+    void UpdateHealthUI()
+    {
+        if (healthFill != null)
+            healthFill.fillAmount = currentHealth / maxHealth;
     }
 }

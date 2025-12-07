@@ -127,6 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   lifetime: 3
+  dano: 1
+  impactoPrefab: {fileID: 3317209782861273846, guid: 6715b8f6293bcca498bf8642b20b55a7, type: 3}
 --- !u!50 &7381189436827413815
 Rigidbody2D:
   serializedVersion: 5

@@ -15,7 +15,7 @@ public class BossMother : MonoBehaviour
     [Header("Attacks")]
     public GameObject laserPrefab;
     public GameObject missilePrefab;
-    public GameObject energyBeamPrefab; // raio que segue o jogador
+    public GameObject energyBeamPrefab; // Raio que segue jogador
     public Transform firePoint;
     public float laserRate = 1f;
     private float nextLaser;
@@ -29,9 +29,21 @@ public class BossMother : MonoBehaviour
     public float stage3Health = 166f; // 1/3 da vida
     private int stage = 1;
 
+    [Header("HUD")]
+    public IntEventChannel hpBossEvent;
+
+    [Header("Explosion")]
+    public ParticleSystem explosion;
+
+    private Transform player;
+
     void Start()
     {
         currentHealth = maxHealth;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // Atualiza HUD inicial
+        hpBossEvent?.Raise((int)currentHealth);
     }
 
     void Update()
@@ -71,27 +83,27 @@ public class BossMother : MonoBehaviour
     void Attack()
     {
         // Fase 1+ → laser frontal
-        if(Time.time >= nextLaser)
+        if(Time.time >= nextLaser && laserPrefab != null && firePoint != null)
         {
             nextLaser = Time.time + laserRate;
             Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
         }
 
         // Fase 2+ → lança mísseis guiados
-        if(stage >= 2 && Time.time >= nextMissile)
+        if(stage >= 2 && Time.time >= nextMissile && missilePrefab != null && firePoint != null)
         {
             nextMissile = Time.time + missileRate;
             Instantiate(missilePrefab, firePoint.position, firePoint.rotation);
         }
 
         // Fase 3 → raio de energia que segue o jogador
-        if(stage >= 3 && Time.time >= nextEnergyBeam)
+        if(stage >= 3 && Time.time >= nextEnergyBeam && energyBeamPrefab != null && firePoint != null && player != null)
         {
             nextEnergyBeam = Time.time + energyBeamRate;
             GameObject beam = Instantiate(energyBeamPrefab, firePoint.position, firePoint.rotation);
             if(beam.TryGetComponent<LaserFollow>(out var follow))
             {
-                follow.target = GameObject.FindGameObjectWithTag("Player").transform;
+                follow.target = player;
                 follow.speed = 5f;
             }
         }
@@ -113,6 +125,9 @@ public class BossMother : MonoBehaviour
             currentHealth -= damage;
         }
 
+        // Atualiza HUD
+        hpBossEvent?.Raise((int)currentHealth);
+
         if(currentHealth <= 0)
         {
             Die();
@@ -122,7 +137,15 @@ public class BossMother : MonoBehaviour
     void Die()
     {
         Debug.Log("Boss destruído!");
+
+        // Explosão
+        if(explosion != null)
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
+        // Chama vitória
+        if(GameManager.Instance != null)
+            GameManager.Instance.TriggerVictory();
+
         Destroy(gameObject);
-        // Aqui você pode chamar pontuação, tela de vitória, etc.
     }
 }
