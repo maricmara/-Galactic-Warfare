@@ -124,11 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c461ce990171b44a9bc3fba94bc788b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpType: 2
-  healAmount: 20
-  ammoAmount: 10
-  superShotDuration: 5
-  shieldAmount: 20
+  type: 3
+  amount: 20
 --- !u!61 &-2132500712748461307
 BoxCollider2D:
   m_ObjectHideFlags: 0

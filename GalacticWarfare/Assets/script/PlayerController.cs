@@ -18,16 +18,16 @@ public class PlayerSpaceshipController : MonoBehaviour
     public float fireRate = 0.2f;
     private float nextFire = 0f;
 
-    private int currentShot = 1;   // ← tiro atual
-    public int CurrentShot => currentShot;   // ← propriedade para UI
+    private int currentShot = 1;   // tiro atual
+    public int CurrentShot => currentShot;
 
     private Rigidbody2D rb;
 
     [Header("Recursos do jogador")]
-    public int ammoRocket = 50;       // Foguetes
-    public float laserEnergy = 100f;  // Energia do laser 0-100%
+    public int ammoRocket = 50;       // foguetes
+    public float laserEnergy = 100f;  // energia laser
     public bool superShotActive = false;
-    public float shield = 0f;         // Escudo
+    public float shield = 0f;         // escudo
 
     void Start()
     {
@@ -47,7 +47,6 @@ public class PlayerSpaceshipController : MonoBehaviour
         {
             currentShot++;
             if (currentShot > 3) currentShot = 1;
-            Debug.Log("Tiro atual: " + currentShot);
         }
 
         // Atirar
@@ -60,13 +59,13 @@ public class PlayerSpaceshipController : MonoBehaviour
             switch (currentShot)
             {
                 case 1:
-                    prefab = bullet1; // tiro rápido
+                    prefab = bullet1;
                     break;
 
                 case 2:
                     if (ammoRocket > 0)
                     {
-                        prefab = bullet2; // foguete
+                        prefab = bullet2;
                         ammoRocket--;
                     }
                     break;
@@ -74,8 +73,8 @@ public class PlayerSpaceshipController : MonoBehaviour
                 case 3:
                     if (laserEnergy > 0f)
                     {
-                        prefab = bullet3; // laser
-                        laserEnergy -= 5f; // consome energia por tiro
+                        prefab = bullet3;
+                        laserEnergy -= 5f;
                         if (laserEnergy < 0f) laserEnergy = 0f;
                     }
                     break;

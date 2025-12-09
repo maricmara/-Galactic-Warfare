@@ -20,7 +20,7 @@ public class BossMother : MonoBehaviour
     public GameObject missilePrefab;
     public GameObject energyBeamPrefab;
     public Transform firePoint;
-    public float attackRange = 10f; // Só atira se player estiver próximo
+    public float attackRange = 10f;
 
     public float laserRate = 1f;
     private float nextLaser;
@@ -49,7 +49,7 @@ public class BossMother : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        // Começa no final do cenário
+        // Começa no último ponto do cenário
         if (movePoints.Length > 0)
             transform.position = movePoints[movePoints.Length - 1].position;
     }
@@ -84,11 +84,9 @@ public class BossMother : MonoBehaviour
     void Attack()
     {
         if (player == null) return;
+        if (Vector3.Distance(transform.position, player.position) > attackRange) return;
 
-        float dist = Vector3.Distance(transform.position, player.position);
-        if (dist > attackRange) return;
-
-        switch(stage)
+        switch (stage)
         {
             case 1:
                 if (Time.time >= nextLaser && laserPrefab != null)
@@ -144,7 +142,9 @@ public class BossMother : MonoBehaviour
         if (explosion != null)
             Instantiate(explosion, transform.position, Quaternion.identity);
 
-        GameManager.Instance?.TriggerVictory();
+        // Chama a vitória corretamente
+        GameManager.Instance.TriggerVictory();
+
         Destroy(gameObject);
     }
 }
