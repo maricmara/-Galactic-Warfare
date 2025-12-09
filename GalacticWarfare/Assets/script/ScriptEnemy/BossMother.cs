@@ -3,20 +3,25 @@ using UnityEngine;
 public class BossMother : MonoBehaviour
 {
     [Header("Stats")]
-    public float maxHealth = 500f;
-    private float currentHealth;
-    public int shield = 100;
+    public int maxHealth = 150;
+    private int currentHealth;
+    public int shield = 50;
 
     [Header("Movement")]
     public float moveSpeed = 2f;
     public Transform[] movePoints;
     private int currentPoint = 0;
 
+    [Header("Movement Boundaries")]
+    public float minX = -6f, maxX = 6f, minY = 2f, maxY = 5f;
+
     [Header("Attacks")]
     public GameObject laserPrefab;
     public GameObject missilePrefab;
-    public GameObject energyBeamPrefab; // Raio que segue jogador
+    public GameObject energyBeamPrefab;
     public Transform firePoint;
+    public float attackRange = 10f; // Só atira se player estiver próximo
+
     public float laserRate = 1f;
     private float nextLaser;
     public float missileRate = 3f;
@@ -25,12 +30,12 @@ public class BossMother : MonoBehaviour
     private float nextEnergyBeam;
 
     [Header("Stage Thresholds")]
-    public float stage2Health = 333f; // 2/3 da vida
-    public float stage3Health = 166f; // 1/3 da vida
+    public int stage2Health = 100;
+    public int stage3Health = 50;
     private int stage = 1;
 
     [Header("HUD")]
-    public IntEventChannel hpBossEvent;
+    public IntEventChannel bossHpEvent;
 
     [Header("Explosion")]
     public ParticleSystem explosion;
@@ -40,10 +45,13 @@ public class BossMother : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        bossHpEvent?.Raise(currentHealth);
+
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        // Atualiza HUD inicial
-        hpBossEvent?.Raise((int)currentHealth);
+        // Começa no final do cenário
+        if (movePoints.Length > 0)
+            transform.position = movePoints[movePoints.Length - 1].position;
     }
 
     void Update()
@@ -55,97 +63,88 @@ public class BossMother : MonoBehaviour
 
     void HandleStages()
     {
-        if(currentHealth <= stage3Health && stage < 3)
-        {
-            stage = 3;
-            Debug.Log("Stage 3 - Raio de energia ativado!");
-        }
-        else if(currentHealth <= stage2Health && stage < 2)
-        {
-            stage = 2;
-            Debug.Log("Stage 2 - Mísseis ativados!");
-        }
+        if (currentHealth <= stage3Health && stage < 3) stage = 3;
+        else if (currentHealth <= stage2Health && stage < 2) stage = 2;
     }
 
     void MoveBoss()
     {
-        if(movePoints.Length == 0) return;
+        if (movePoints.Length == 0) return;
 
         Transform targetPoint = movePoints[currentPoint];
-        transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
+        Vector3 newPos = Vector3.MoveTowards(transform.position, targetPoint.position, moveSpeed * Time.deltaTime);
+        newPos.x = Mathf.Clamp(newPos.x, minX, maxX);
+        newPos.y = Mathf.Clamp(newPos.y, minY, maxY);
+        transform.position = newPos;
 
-        if(Vector3.Distance(transform.position, targetPoint.position) < 0.1f)
-        {
+        if (Vector3.Distance(transform.position, targetPoint.position) < 0.05f)
             currentPoint = (currentPoint + 1) % movePoints.Length;
-        }
     }
 
     void Attack()
     {
-        // Fase 1+ → laser frontal
-        if(Time.time >= nextLaser && laserPrefab != null && firePoint != null)
-        {
-            nextLaser = Time.time + laserRate;
-            Instantiate(laserPrefab, firePoint.position, firePoint.rotation);
-        }
+        if (player == null) return;
 
-        // Fase 2+ → lança mísseis guiados
-        if(stage >= 2 && Time.time >= nextMissile && missilePrefab != null && firePoint != null)
-        {
-            nextMissile = Time.time + missileRate;
-            Instantiate(missilePrefab, firePoint.position, firePoint.rotation);
-        }
+        float dist = Vector3.Distance(transform.position, player.position);
+        if (dist > attackRange) return;
 
-        // Fase 3 → raio de energia que segue o jogador
-        if(stage >= 3 && Time.time >= nextEnergyBeam && energyBeamPrefab != null && firePoint != null && player != null)
+        switch(stage)
         {
-            nextEnergyBeam = Time.time + energyBeamRate;
-            GameObject beam = Instantiate(energyBeamPrefab, firePoint.position, firePoint.rotation);
-            if(beam.TryGetComponent<LaserFollow>(out var follow))
-            {
-                follow.target = player;
-                follow.speed = 5f;
-            }
+            case 1:
+                if (Time.time >= nextLaser && laserPrefab != null)
+                {
+                    nextLaser = Time.time + laserRate;
+                    Instantiate(laserPrefab, firePoint.position, Quaternion.Euler(0, 0, 180));
+                }
+                break;
+
+            case 2:
+                if (Time.time >= nextMissile && missilePrefab != null)
+                {
+                    nextMissile = Time.time + missileRate;
+                    Instantiate(missilePrefab, firePoint.position, Quaternion.Euler(0, 0, 180));
+                }
+                break;
+
+            case 3:
+                if (Time.time >= nextEnergyBeam && energyBeamPrefab != null)
+                {
+                    nextEnergyBeam = Time.time + energyBeamRate;
+                    GameObject beam = Instantiate(energyBeamPrefab, firePoint.position, firePoint.rotation);
+                    if (beam.TryGetComponent<LaserFollow>(out LaserFollow lf))
+                    {
+                        lf.target = player;
+                        lf.speed = 5f;
+                    }
+                }
+                break;
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        if(shield > 0)
+        int damageToHealth = damage;
+
+        if (shield > 0)
         {
-            shield -= (int)damage;
-            if(shield < 0)
-            {
-                currentHealth += shield; // aplica excesso de dano na vida
-                shield = 0;
-            }
-        }
-        else
-        {
-            currentHealth -= damage;
+            int shieldDamage = Mathf.Min(shield, damage);
+            shield -= shieldDamage;
+            damageToHealth -= shieldDamage;
         }
 
-        // Atualiza HUD
-        hpBossEvent?.Raise((int)currentHealth);
+        currentHealth -= damageToHealth;
+        bossHpEvent?.Raise(currentHealth);
 
-        if(currentHealth <= 0)
-        {
+        if (currentHealth <= 0)
             Die();
-        }
     }
 
     void Die()
     {
-        Debug.Log("Boss destruído!");
-
-        // Explosão
-        if(explosion != null)
+        if (explosion != null)
             Instantiate(explosion, transform.position, Quaternion.identity);
 
-        // Chama vitória
-        if(GameManager.Instance != null)
-            GameManager.Instance.TriggerVictory();
-
+        GameManager.Instance?.TriggerVictory();
         Destroy(gameObject);
     }
 }

@@ -11,14 +11,17 @@ public class GameManager : Singleton<GameManager>
     public IntEventChannel scoreEvent;
     public IntEventChannel livesEvent;
 
-    [Header("Tela de Game Over")]
+    [Header("UI")]
     public GameOverUI gameOverUI;
+    public GameObject victoryScreen;
 
     private void Start()
     {
-        // Atualiza HUD inicial
         scoreEvent?.Raise(score);
         livesEvent?.Raise(lives);
+
+        if (victoryScreen != null)
+            victoryScreen.SetActive(false);
     }
 
     public void AddScore(int amount)
@@ -35,26 +38,29 @@ public class GameManager : Singleton<GameManager>
         livesEvent?.Raise(lives);
 
         if (lives <= 0)
-        {
             GameOver();
-        }
     }
 
     public void GameOver()
     {
-        Debug.Log("GAME OVER via GameManager");
-
-        Time.timeScale = 0f; // Pausa o jogo
-
+        Time.timeScale = 0f;
         if (gameOverUI != null)
             gameOverUI.MostrarGameOver();
-        else
-            Debug.LogError("GameOverUI não foi configurado no GameManager!");
+    }
+
+    public void TriggerVictory()
+    {
+        Debug.Log("VITÓRIA!");
+        if (victoryScreen != null)
+        {
+            victoryScreen.SetActive(true);
+            Time.timeScale = 0f; // Pausa o jogo
+        }
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1f; // Despausa
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

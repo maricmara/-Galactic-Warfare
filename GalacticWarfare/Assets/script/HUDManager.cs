@@ -1,15 +1,33 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-    [Header("UI References")]
+    [Header("Score UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI livesText;
 
     [Header("Event Channels")]
     [SerializeField] private IntEventChannel scoreEvent;
     [SerializeField] private IntEventChannel livesEvent;
+
+    [Header("Boss UI")]
+    public GameObject bossPanel;
+    public Slider bossSlider;
+
+    [Header("Boss Event")]
+    public IntEventChannel bossHpEvent;
+
+    private void Start()
+    {
+        // Iniciar score/vidas normalmente
+
+        // Configurar barra do boss
+        bossPanel.SetActive(false);
+        bossSlider.maxValue = 500;
+        bossSlider.value = 500;
+    }
 
     private void OnEnable()
     {
@@ -18,6 +36,9 @@ public class HUDManager : MonoBehaviour
 
         if (livesEvent != null)
             livesEvent.Register(UpdateLives);
+
+        if (bossHpEvent != null)
+            bossHpEvent.Register(UpdateBossHP);
     }
 
     private void OnDisable()
@@ -27,17 +48,24 @@ public class HUDManager : MonoBehaviour
 
         if (livesEvent != null)
             livesEvent.Unregister(UpdateLives);
+
+        if (bossHpEvent != null)
+            bossHpEvent.Unregister(UpdateBossHP);
     }
 
-    // REMOVIDO Start() QUE SOBRESCREVIA OS VALORES
-
-    private void UpdateScore(int score)
+    private void UpdateScore(int s)
     {
-        scoreText.text = score.ToString("000000");
+        scoreText.text = s.ToString("000000");
     }
 
-    private void UpdateLives(int lives)
+    private void UpdateLives(int l)
     {
-        livesText.text = "x" + lives.ToString("00");
+        livesText.text = "x" + l.ToString("00");
+    }
+
+    private void UpdateBossHP(int hp)
+    {
+        bossPanel.SetActive(true);
+        bossSlider.value = hp;
     }
 }

@@ -5,26 +5,23 @@ public class BulletMovement2D : MonoBehaviour
     [Header("Configuração da Bala")]
     public float speed = 25f;
     public float lifetime = 3f;
-    public int dano = 1;
+    public int dano = 1;               // dano padrão para inimigos normais
+    public int bossDamageMultiplier = 5; // multiplicador de dano para a Nave Mãe
 
     [Header("Partícula de Impacto (apenas no contato com inimigo)")]
-    public GameObject impactoPrefab;   // arraste aqui o prefab da faísca
+    public GameObject impactoPrefab;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Use rb.velocity (mais compatível)
         rb.linearVelocity = transform.right * speed;
-
-        // A bala some depois de alguns segundos
         Destroy(gameObject, lifetime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // === Primeiro, detectar TIPO concreto de inimigo e aplicar dano corretamente ===
         // StarFighter
         StarFighter sf = other.GetComponent<StarFighter>();
         if (sf != null)
@@ -35,7 +32,7 @@ public class BulletMovement2D : MonoBehaviour
             return;
         }
 
-        // AttackShip (Nave de Ataque)
+        // AttackShip
         AttackShip aship = other.GetComponent<AttackShip>();
         if (aship != null)
         {
@@ -45,7 +42,7 @@ public class BulletMovement2D : MonoBehaviour
             return;
         }
 
-        // BattleCruiser (Cruzador)
+        // BattleCruiser
         BattleCruiser bc = other.GetComponent<BattleCruiser>();
         if (bc != null)
         {
@@ -55,16 +52,22 @@ public class BulletMovement2D : MonoBehaviour
             return;
         }
 
-        // Se bater num obstáculo (cenário) — só destruir a bala (sem criar faísca se não quiser)
+        // BossMother (NAVE-MÃE)
+        BossMother boss = other.GetComponent<BossMother>();
+        if (boss != null)
+        {
+            boss.TakeDamage(dano * bossDamageMultiplier); // aplica dano maior
+            CriarImpacto(transform.position);
+            Destroy(gameObject);
+            return;
+        }
+
+        // Obstáculos
         if (other.CompareTag("Obstacle") || other.CompareTag("Walls") || other.CompareTag("Ground"))
         {
             Destroy(gameObject);
             return;
         }
-
-        // Se bater em algo que não é inimigo (player, UI, etc.) — ignore ou destrua só a bala
-        // Removi o bloco genérico que destrói "other.gameObject" com tag "Enemy" — isso fazia matar inimigos instant.
-        // Se quiser que algum objeto "frágil" morra, trate isso em um script específico daquele objeto.
     }
 
     void CriarImpacto(Vector3 pos)
@@ -72,8 +75,6 @@ public class BulletMovement2D : MonoBehaviour
         if (impactoPrefab != null)
         {
             GameObject fx = Instantiate(impactoPrefab, pos, Quaternion.identity);
-
-            // Se o prefab não tiver StopAction=Destroy por segurança destruímos em 0.6s
             Destroy(fx, 0.6f);
         }
     }
